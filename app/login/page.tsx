@@ -137,7 +137,7 @@ export default function Login() {
                     Aguarde
                   </div>
                 ) : (
-                  <>"Entrar"</>
+                  <>Entrar</>
                 )}
               </button>
               <div className="flex flex-col text-sm text-green-700 pt-4 items-center">
