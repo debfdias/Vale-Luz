@@ -1,3 +1,5 @@
+"use client"
+
 import { FacebookLogo, InstagramLogo, TwitterLogo } from "@phosphor-icons/react"
 import Image from "next/image"
 import logo from "../../assets/download.png"

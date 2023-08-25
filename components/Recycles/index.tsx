@@ -1,3 +1,5 @@
+"use client"
+
 import { CheckCircle } from "@phosphor-icons/react"
 import Image from "next/image"
 import recycle from "../../assets/image5.png"

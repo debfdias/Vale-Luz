@@ -1,14 +1,16 @@
+"use client"
+
 import { SignIn } from "@phosphor-icons/react"
 import Image from "next/image"
 import logo from "../../assets/download.png"
 
-import { useRouter } from "next/router"
+import { usePathname, useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
 import { Link as LinkScroll } from "react-scroll"
 
 export default function Header() {
   const router = useRouter()
-  const { asPath, pathname } = useRouter()
+  const pathname = usePathname()
   const [activeLink, setActiveLink] = useState<string>("")
   const [scrollActive, setScrollActive] = useState(false)
 
