@@ -1,5 +1,5 @@
-import FormValues from "@/src/interfaces/FormValues"
 import { UseFormRegister } from "react-hook-form"
+import FormValues from "../../interfaces/FormValues"
 
 interface InputProps {
   label: string
