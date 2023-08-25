@@ -3,13 +3,22 @@
 import CommonHeader from "@/components/CommonHeader"
 import InputText from "@/components/Input"
 import FormValues from "@/interfaces/FormValues"
+import { signIn } from "next-auth/react"
 import Image from "next/image"
 import Link from "next/link"
+import { useRouter } from "next/navigation"
+import { useState } from "react"
 import { useForm } from "react-hook-form"
+import { PropagateLoader } from "react-spinners"
+import { ToastContainer, toast } from "react-toastify"
+import "react-toastify/dist/ReactToastify.css"
 import googleLogo from "../../assets/google..png"
 import image from "../../assets/image7.jpeg"
 
 export default function Login() {
+  const router = useRouter()
+  const [loading, setLoading] = useState(false)
+
   const {
     register,
     handleSubmit,
@@ -38,17 +47,45 @@ export default function Login() {
     },
   })
 
-  console.log("errors", errors)
+  function handleLogin(data: any) {
+    setLoading(true)
+    signIn("credentials", {
+      redirect: false,
+      email: data.email,
+      password: data.password,
+      // @ts-ignore
+    }).then(({ error }) => {
+      if (error) {
+        setLoading(false)
+        toast.error(error)
+      } else {
+        router.refresh()
+        router.push("/dashboard")
+      }
+    })
+  }
 
   return (
     <>
       <CommonHeader />
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="colored"
+      />
       <main className="pt-[80px] flex justify-center items-center">
         <section className="bg-white flex flex-wrap shadow-lg px-16 py-14 lg:p-0 overflow-hidden rounded-[10px]">
           <div className="flex items-center mx-auto  mb-4 lg:px-16 lg:py-14">
             <form
               onSubmit={handleSubmit((data) => {
-                console.log(data)
+                handleLogin(data)
                 reset()
               })}
               className="flex flex-col"
@@ -89,11 +126,20 @@ export default function Login() {
                 error={errors.password?.message}
                 register={register}
               />
-              <input
+              <button
                 type="submit"
-                value="Entrar"
-                className="rounded-full cursor-pointer px-4 py-3 bg-green-500 text-white hover:bg-green-700 mt-5"
-              />
+                disabled={loading}
+                className="rounded-full cursor-pointer px-4 py-3 bg-green-500 text-white hover:bg-green-700 mt-5 disabled:opacity-40"
+              >
+                {loading ? (
+                  <div className="">
+                    <PropagateLoader color="#36d7b7" />
+                    Aguarde
+                  </div>
+                ) : (
+                  <>"Entrar"</>
+                )}
+              </button>
               <div className="flex flex-col text-sm text-green-700 pt-4 items-center">
                 <div>
                   Não tem uma conta?

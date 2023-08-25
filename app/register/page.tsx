@@ -5,13 +5,17 @@ import InputText from "@/components/Input"
 import FormValues from "@/interfaces/FormValues"
 import Image from "next/image"
 import Link from "next/link"
+import { useState } from "react"
 import { useForm } from "react-hook-form"
+import { PropagateLoader } from "react-spinners"
 import { ToastContainer, toast } from "react-toastify"
 import "react-toastify/dist/ReactToastify.css"
 import googleLogo from "../../assets/google..png"
 import image from "../../assets/image7.jpeg"
 
 export default function Register() {
+  const [loading, setLoading] = useState(false)
+
   const {
     register,
     handleSubmit,
@@ -47,6 +51,7 @@ export default function Register() {
   })
 
   async function handleRegister(data: any) {
+    setLoading(true)
     try {
       fetch("/api/auth/register", {
         method: "POST",
@@ -61,6 +66,7 @@ export default function Register() {
         }),
       }).then(async (res) => {
         if (res.status === 200) {
+          setLoading(false)
           toast.success("Usuário cadastrado com sucesso!", {
             position: "top-right",
             autoClose: 5000,
@@ -71,6 +77,7 @@ export default function Register() {
             progress: undefined,
           })
         } else {
+          setLoading(false)
           const { error } = await res.json()
           toast.error(error)
         }
@@ -165,11 +172,20 @@ export default function Register() {
                 error={errors.password?.message}
                 register={register}
               />
-              <input
+              <button
                 type="submit"
-                value="Criar conta"
-                className="rounded-full cursor-pointer px-4 py-3 bg-green-500 text-white hover:bg-green-700 mt-5"
-              />
+                disabled={loading}
+                className="rounded-full cursor-pointer px-4 py-3 bg-green-500 text-white hover:bg-green-700 mt-5 disabled:opacity-40"
+              >
+                {loading ? (
+                  <div className="">
+                    <PropagateLoader color="#36d7b7" />
+                    Aguarde
+                  </div>
+                ) : (
+                  <>Cadastrar</>
+                )}
+              </button>
               <div className="flex flex-col text-sm text-green-700 pt-4 items-center">
                 <div>
                   Já tem uma conta?
