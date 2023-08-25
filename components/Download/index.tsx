@@ -22,7 +22,7 @@ export default function DownloadApp() {
           </span>
           <div className="flex items-center gap-6 pt-10">
             <Link target="_blank" href="https://play.google.com/store">
-              <div className="w-[150px] ">
+              <div className="w-[110px] ">
                 <Image
                   alt="Disponível no Google Play"
                   src={badgeGoogle}
@@ -31,7 +31,7 @@ export default function DownloadApp() {
               </div>
             </Link>
             <Link target="_blank" href="https://www.apple.com/app-store/">
-              <div className="w-[170px]">
+              <div className="w-[130px]">
                 <Image
                   alt="Disponível na App Store"
                   src={badgeApple}

@@ -1,3 +1,10 @@
+"use client"
+import dynamic from "next/dynamic"
+
+const DynamicMap = dynamic(() => import("../Map"), {
+  ssr: false,
+})
+
 export default function Cronogram() {
   return (
     <div className="flex flex-col pt-20" id="cronogram">
@@ -12,14 +19,8 @@ export default function Cronogram() {
         </div>
       </div>
       <div>
-        <div className="hidden lg:flex pb-12 px-40 ">
-          {/* <Map height={500} defaultCenter={[-8.08, -34.9]} defaultZoom={12}>
-            <ZoomControl />
-            <Marker width={50} anchor={[-8.0577, -34.883]} />
-            <Marker width={50} anchor={[-8.0662, -34.88]} />
-            <Marker width={50} anchor={[-8.0852, -34.931]} />
-            <Marker width={50} anchor={[-8.0921, -34.912]} />
-          </Map> */}
+        <div className="hidden lg:flex pb-12 px-40">
+          <DynamicMap />
         </div>
       </div>
     </div>
