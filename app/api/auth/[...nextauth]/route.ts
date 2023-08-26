@@ -27,7 +27,7 @@ const authOptions: NextAuthOptions = {
             email,
           },
         })
-        if (!user || !(await compare(password, user.password))) {
+        if (!user || !(await compare(password, user.hashedPassword!))) {
           throw new Error("Usuário ou senha incorretos!")
         }
         return user
@@ -50,7 +50,7 @@ const authOptions: NextAuthOptions = {
   pages: {
     signIn: "/login",
   },
-  debug: process.env.NODE_ENV === "development",
+  //debug: process.env.NODE_ENV === "development",
 }
 
 const handler = NextAuth(authOptions)

@@ -3,7 +3,6 @@
 import CommonHeader from "@/components/CommonHeader"
 import InputText from "@/components/Input"
 import FormValues from "@/interfaces/FormValues"
-import { signIn } from "next-auth/react"
 import Image from "next/image"
 import Link from "next/link"
 import { useState } from "react"
@@ -11,7 +10,6 @@ import { useForm } from "react-hook-form"
 import { PropagateLoader } from "react-spinners"
 import { ToastContainer, toast } from "react-toastify"
 import "react-toastify/dist/ReactToastify.css"
-import googleLogo from "../../assets/google..png"
 import image from "../../assets/image7.jpeg"
 
 export default function Register() {
@@ -118,29 +116,9 @@ export default function Register() {
               <h1 className="text-4xl font-bold text-gray-500 ">
                 Criar uma conta
               </h1>
-              <p className="text-gray-500 my-2">
+              <p className="text-gray-500 my-2 mb-6">
                 Quase lá! Preencha o formulário abaixo com seus dados.
               </p>
-              <div className="flex justify-center my-4">
-                <Link
-                  onClick={() => signIn("google")}
-                  href=""
-                  className="px-6 py-2 rounded-[4px] shadow-sm flex gap-4 border border-gray-200 text-sm items-center hover:shadow-lg"
-                >
-                  <Image
-                    src={googleLogo}
-                    alt="img"
-                    width={20}
-                    height={20}
-                  ></Image>
-                  <p>Continue com Google</p>
-                </Link>
-              </div>
-              <div className="flex items-center gap-4">
-                <div className="border-t border-slate-300 grow"></div>
-                <p className="text-base text-slate-400 self-start">ou</p>
-                <div className="border-t border-slate-300 grow"></div>
-              </div>
               <div className="flex gap-4">
                 <div>
                   <InputText
