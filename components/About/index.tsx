@@ -28,7 +28,7 @@ export default function About() {
     <div className="mt-24 px-20 mx-auto" id="about">
       <div className="grid grid-flow-row sm:grid-flow-col grid-rows-2 md:grid-rows-1 sm:grid-cols-2 gap-8 py-6 sm:py-16">
         <div className=" flex flex-col gap-8 justify-center items-start row-start-2 sm:row-start-1">
-          <h1 className="lg:text-3xl md:text-xl font-medium text-black-600 leading-normal">
+          <h1 className="lg:text-3xl text-2xl font-bold text-gray-500 leading-normal">
             Que tal ganhar desconto na sua conta de luz todo mês
             <span className="font-bold"> reciclando?</span>
           </h1>

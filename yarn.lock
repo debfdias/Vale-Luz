@@ -117,6 +117,11 @@
     semver "^7.3.5"
     tar "^6.1.11"
 
+"@next-auth/prisma-adapter@^0.4.4-canary.81":
+  version "0.4.4-canary.81"
+  resolved "https://registry.yarnpkg.com/@next-auth/prisma-adapter/-/prisma-adapter-0.4.4-canary.81.tgz#60620d750ef1926f6e74b2de4d05a57eb9838105"
+  integrity sha512-RXdjrRkK4A3ksMdGXIyDmYBcgdpmbVqSGDoaH2X7P/MLBngh3/GO8TFGpiLwiUt1o4+Py81KICZYvBgatRP+Ew==
+
 "@next/env@13.4.13":
   version "13.4.13"
   resolved "https://registry.yarnpkg.com/@next/env/-/env-13.4.13.tgz#50250cec7626904b93a4a934933d6a747763259d"

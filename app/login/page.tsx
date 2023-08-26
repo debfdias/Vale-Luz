@@ -95,6 +95,7 @@ export default function Login() {
               </h1>
               <div className="py-6">
                 <Link
+                  onClick={() => signIn("google")}
                   href=""
                   className="px-6 py-2 rounded-[4px] shadow-sm flex gap-4 border border-gray-200 text-sm items-center hover:shadow-lg justify-center"
                 >

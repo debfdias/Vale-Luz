@@ -1,3 +1,4 @@
+import Provider from "@/contexts/AuthProvider"
 import type { Metadata } from "next"
 import { Raleway } from "next/font/google"
 import "./globals.css"
@@ -22,7 +23,9 @@ export default function RootLayout({
       <head>
         <link rel="icon" href="/favicon.ico" sizes="any" />
       </head>
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className}>
+        <Provider>{children}</Provider>
+      </body>
     </html>
   )
 }
