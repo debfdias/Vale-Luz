@@ -21,6 +21,7 @@ export async function POST(req: Request) {
         hashedPassword: await hash(password, 10),
         firstName,
         lastName,
+        name: firstName + " " + lastName,
       },
     })
     return NextResponse.json(user)

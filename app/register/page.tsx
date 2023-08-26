@@ -3,6 +3,7 @@
 import CommonHeader from "@/components/CommonHeader"
 import InputText from "@/components/Input"
 import FormValues from "@/interfaces/FormValues"
+import axios from "axios"
 import Image from "next/image"
 import Link from "next/link"
 import { useState } from "react"
@@ -51,21 +52,18 @@ export default function Register() {
 
   async function handleRegister(data: any) {
     setLoading(true)
-    try {
-      fetch("/api/auth/register", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          email: data.email,
-          password: data.password,
-          firstName: data.firstName,
-          lastName: data.lastName,
-        }),
-      }).then(async (res) => {
+
+    const userData = JSON.stringify({
+      email: data.email,
+      password: data.password,
+      firstName: data.firstName,
+      lastName: data.lastName,
+    })
+
+    axios
+      .post("/api/auth/register", userData)
+      .then(async (res) => {
         if (res.status === 200) {
-          setLoading(false)
           toast.success("Usuário cadastrado com sucesso!", {
             position: "top-right",
             autoClose: 5000,
@@ -76,16 +74,14 @@ export default function Register() {
             progress: undefined,
           })
           reset()
-        } else {
-          setLoading(false)
-          const { error } = await res.json()
-          toast.error(error)
-          reset()
         }
       })
-    } catch (e) {
-      toast.error("Algo deu errado!")
-    }
+      .catch((err) => {
+        toast.error(err?.response?.data || "Algo deu errado.")
+      })
+      .finally(() => {
+        setLoading(false)
+      })
   }
 
   return (

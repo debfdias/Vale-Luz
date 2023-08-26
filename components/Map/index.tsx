@@ -27,7 +27,7 @@ export default function Map() {
       <MapContainer
         style={{
           height: "60vh",
-          width: "900px",
+          width: "100vh",
           zIndex: 1,
         }}
         center={[-8.08, -34.9]}

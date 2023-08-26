@@ -1,5 +1,6 @@
 "use client"
 import dynamic from "next/dynamic"
+import Table from "../Table"
 
 const DynamicMap = dynamic(() => import("../Map"), {
   ssr: false,
@@ -8,7 +9,7 @@ const DynamicMap = dynamic(() => import("../Map"), {
 export default function Cronogram() {
   return (
     <div className="flex flex-col pt-20" id="cronogram">
-      <div className="px-40 pb-20">
+      <div className="px-20 lg:px-40 pb-20">
         <div className="text-2xl sm:text-3xl font-bold text-gray-500">
           Pontos de Coleta
         </div>
@@ -21,6 +22,9 @@ export default function Cronogram() {
       <div>
         <div className="hidden lg:flex pb-12 px-40">
           <DynamicMap />
+        </div>
+        <div>
+          <Table />
         </div>
       </div>
     </div>
