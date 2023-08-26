@@ -21,8 +21,6 @@ export async function POST(req: Request) {
         password: await hash(password, 10),
         firstName,
         lastName,
-        avatar: "",
-        cpf: "",
       },
     })
     return NextResponse.json(user)

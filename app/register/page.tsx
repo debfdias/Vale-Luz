@@ -77,10 +77,12 @@ export default function Register() {
             draggable: true,
             progress: undefined,
           })
+          reset()
         } else {
           setLoading(false)
           const { error } = await res.json()
           toast.error(error)
+          reset()
         }
       })
     } catch (e) {
@@ -111,7 +113,6 @@ export default function Register() {
               className="flex flex-col"
               onSubmit={handleSubmit((data: FormValues) => {
                 handleRegister(data)
-                reset()
               })}
             >
               <h1 className="text-4xl font-bold text-gray-500 ">

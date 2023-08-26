@@ -58,6 +58,7 @@ export default function Login() {
       if (error) {
         setLoading(false)
         toast.error(error)
+        reset()
       } else {
         router.refresh()
         router.push("/dashboard")
@@ -86,7 +87,6 @@ export default function Login() {
             <form
               onSubmit={handleSubmit((data) => {
                 handleLogin(data)
-                reset()
               })}
               className="flex flex-col"
             >
