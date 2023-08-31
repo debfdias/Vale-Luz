@@ -37,19 +37,21 @@ model Session {
 }
 
 model User {
-  id             String    @id @default(cuid())
+  id             String     @id @default(cuid())
   name           String?
   firstName      String?
   lastName       String?
-  email          String?   @unique
+  email          String?    @unique
   emailVerified  DateTime?
   cpf            String?
   image          String?
-  createdAt      DateTime  @default(now())
+  createdAt      DateTime   @default(now())
   hashedPassword String?
-  updatedAt      DateTime  @default(now())
+  updatedAt      DateTime   @default(now())
+  credits        Decimal    @default(0) @db.Decimal(5, 2)
   accounts       Account[]
   sessions       Session[]
+  contracts      Contract[]
 }
 
 model VerificationToken {
@@ -58,4 +60,32 @@ model VerificationToken {
   expires    DateTime
 
   @@unique([identifier, token])
+}
+
+model Bill {
+  id             String   @id @default(uuid())
+  price          Decimal  @db.Decimal(5, 2)
+  discount       Decimal  @default(0) @db.Decimal(5, 2)
+  contractNumber String
+  expirationDate DateTime
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @default(now())
+}
+
+model Contract {
+  id             String      @id @default(uuid())
+  userId         String      @unique
+  contractNumber String      @unique
+  address        String
+  type           TypeAddress @default(OTHER)
+  isValid        Boolean     @default(false)
+  user           User        @relation(fields: [userId], references: [id])
+
+  @@index([userId])
+}
+
+enum TypeAddress {
+  HOUSE
+  APARTMENT
+  OTHER
 }
