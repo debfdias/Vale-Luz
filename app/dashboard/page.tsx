@@ -1,17 +1,32 @@
 "use client"
 
-import { signOut, useSession } from "next-auth/react"
+import AuthHeader from "@/components/AuthHeader"
+import Sidebar from "@/components/Sidebar"
+import Wrapper from "@/components/Wrapper"
+import { useSession } from "next-auth/react"
+
+import { useEffect, useState } from "react"
+import "react-toastify/dist/ReactToastify.css"
 
 export default function Dashboard() {
+  const [navOption, setNavOption] = useState<string>("dashboard")
+  const [isNavMobile, setIsNavMobile] = useState(false)
   const { data: session } = useSession()
+
+  useEffect(() => {}, [isNavMobile, navOption])
 
   return (
     <div>
-      <div>dashboard</div>
-      <div>Signed in as {session?.user?.email}</div>
-      <button className="bg-red-500 p-4" onClick={() => signOut()}>
-        Sign me out!
-      </button>
+      <AuthHeader setIsNavMobile={setIsNavMobile} showNav={isNavMobile} />
+      <Sidebar
+        isNavOpen={isNavMobile}
+        setNavOption={setNavOption}
+        currentOption={navOption}
+      />
+
+      <Wrapper>
+        <div>Ola, {session?.user.name}</div>
+      </Wrapper>
     </div>
   )
 }

@@ -1,18 +1,17 @@
-import { UseFormRegister } from "react-hook-form"
-import FormValues from "../../interfaces/FormValues"
+// interface InputProps {
+//   label: string
+//   name: keyof FormValues | keyof ContractValues
+//   type: string
+//   register: UseFormRegister<FormValues>
+//   error: string | undefined
+// }
 
-interface InputProps {
-  label: string
-  name: keyof FormValues
-  type: string
-  register: UseFormRegister<FormValues>
-  error: string | undefined
-}
-
-const InputText = ({ label, name, type, register, error }: InputProps) => {
+const InputText = ({ label, name, type, register, error }: any) => {
   return (
     <>
       <input
+        id={name}
+        name={name}
         type={type}
         {...register(name)}
         placeholder={label}

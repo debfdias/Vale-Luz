@@ -3,7 +3,7 @@ import type { Metadata } from "next"
 import { Raleway } from "next/font/google"
 import "./globals.css"
 
-const inter = Raleway({ weight: ["200", "400", "700"], subsets: ["latin"] })
+const font = Raleway({ weight: ["200", "400", "700"], subsets: ["latin"] })
 
 export const metadata: Metadata = {
   title: "Neonergia - Vale Luz",
@@ -23,7 +23,7 @@ export default function RootLayout({
       <head>
         <link rel="icon" href="/favicon.ico" sizes="any" />
       </head>
-      <body className={inter.className}>
+      <body className={font.className}>
         <Provider>{children}</Provider>
       </body>
     </html>
