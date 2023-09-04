@@ -1,6 +1,7 @@
 "use client"
 
 import AuthHeader from "@/components/AuthHeader"
+import ContractForm from "@/components/ContractForm"
 import Sidebar from "@/components/Sidebar"
 import Wrapper from "@/components/Wrapper"
 import { useSession } from "next-auth/react"
@@ -26,6 +27,7 @@ export default function Dashboard() {
 
       <Wrapper>
         <div>Ola, {session?.user.name}</div>
+        {navOption === "contracts" && <ContractForm />}
       </Wrapper>
     </div>
   )

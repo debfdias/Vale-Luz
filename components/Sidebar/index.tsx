@@ -2,6 +2,7 @@ import {
   ChalkboardTeacher,
   ClockCounterClockwise,
   Files,
+  Gear,
   Recycle,
   SignOut,
 } from "@phosphor-icons/react"
@@ -34,6 +35,11 @@ const navOptions = [
     name: "Histórico",
     icon: <ClockCounterClockwise size={32} />,
     option: "history",
+  },
+  {
+    name: "Configurações",
+    icon: <Gear size={32} />,
+    option: "settings",
   },
 ]
 
@@ -71,7 +77,7 @@ export default function Sidebar({
           })}
 
           <button
-            className="flex items-center text-gray-500 hover:text-red-500 px-3 gap-2 transition ease-in-out delay-150"
+            className="flex items-center text-gray-500 hover:text-red-500 px-3 gap-2 transition ease-in-out delay-150 hover:bg-gray-100 p-2 rounded-lg w-full"
             onClick={() => signOut()}
           >
             <SignOut size={32} />

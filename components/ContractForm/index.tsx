@@ -31,7 +31,7 @@ export default function ContractForm() {
   register("address", { required: "Campo obrigatório" })
   register("type", { required: "Campo obrigatório" })
 
-  async function handleAddContract(data: FormData) {
+  async function handleAddContract(data: any) {
     setLoading(true)
     data.userId = session?.user?.id!
     console.log(data)
@@ -60,93 +60,49 @@ export default function ContractForm() {
         setLoading(false)
       })
 
-    //router.push("/")
+    router.push("/")
   }
 
   return (
     <>
-      <div className="container mx-auto my-4 px-4 lg:px-20">
-        <div className="w-full p-8 my-4 md:px-12 lg:w-9/12 lg:pl-20 lg:pr-40 mr-auto rounded-2xl shadow-2xl">
-          <div className="flex">
-            <h1 className="font-bold uppercase text-5xl">
-              Send us a <br /> message
-            </h1>
-          </div>
-          <div className="grid grid-cols-1 gap-5 md:grid-cols-2 mt-5">
-            <input
-              className="w-full bg-gray-100 text-gray-900 mt-2 p-3 rounded-lg focus:outline-none focus:shadow-outline"
-              type="text"
-              placeholder="First Name*"
-            />
-            <input
-              className="w-full bg-gray-100 text-gray-900 mt-2 p-3 rounded-lg focus:outline-none focus:shadow-outline"
-              type="text"
-              placeholder="Last Name*"
-            />
-            <input
-              className="w-full bg-gray-100 text-gray-900 mt-2 p-3 rounded-lg focus:outline-none focus:shadow-outline"
-              type="email"
-              placeholder="Email*"
-            />
-            <input
-              className="w-full bg-gray-100 text-gray-900 mt-2 p-3 rounded-lg focus:outline-none focus:shadow-outline"
-              type="number"
-              placeholder="Phone*"
-            />
-          </div>
-          <div className="my-4">
-            <textarea
-              placeholder="Message*"
-              className="w-full h-32 bg-gray-100 text-gray-900 mt-2 p-3 rounded-lg focus:outline-none focus:shadow-outline"
-            ></textarea>
-          </div>
-          <div className="my-2 w-1/2 lg:w-1/4">
-            <button
-              className="uppercase text-sm font-bold tracking-wide bg-blue-900 text-gray-100 p-3 rounded-lg w-full 
-                      focus:outline-none focus:shadow-outline"
-            >
-              Send Message
-            </button>
-          </div>
-        </div>
-      </div>
-
-      <div className="w-[450px] bg-pink-400">
+      <div className="bg-white shadow-md rounded-lg p-8 mb-4 flex flex-col my-2">
         <form
-          className="mt-12"
           action=""
           method="POST"
           onSubmit={handleSubmit(handleAddContract)}
         >
           <div className="flex flex-col">
-            <div className="flex gap-4">
-              <InputText
-                label="Conta contrato"
-                name="contractNumber"
-                type="text"
-                error={errors?.contractNumber?.message}
-                register={register}
-              />
-
-              {/* <select
-              id="type"
-              name="type"
-              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            >
-              <option>HOUSE</option>
-              <option>APARTMENT</option>
-              <option>OTHER</option>
-            </select> */}
-
-              <InputText
-                label="Type"
-                name="type"
-                type="text"
-                error={errors?.type?.message}
-                register={register}
-              />
+            <div className="-mx-3 md:flex mb-6">
+              <div className="md:w-1/2 px-3 mb-6 md:mb-0">
+                <label className="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2">
+                  Conta contrato
+                </label>
+                <InputText
+                  label="Conta contrato"
+                  name="contractNumber"
+                  type="text"
+                  error={errors?.contractNumber?.message}
+                  register={register}
+                />
+              </div>
+              <div className="md:w-1/2 px-3">
+                <label className="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2">
+                  Tipo de imóvel
+                </label>
+                <InputText
+                  label="Apartamento/Casa/Etc"
+                  name="type"
+                  type="text"
+                  error={errors?.type?.message}
+                  register={register}
+                />
+              </div>{" "}
             </div>
+
             <div className="flex flex-col">
+              <label className="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2">
+                Endereço completo
+              </label>
               <InputText
                 label="Endereço"
                 name="address"
@@ -160,7 +116,7 @@ export default function ContractForm() {
           <button
             type="submit"
             disabled={loading}
-            className="rounded-full cursor-pointer px-4 py-3 bg-green-500 text-white hover:bg-green-700 mt-5 disabled:opacity-40"
+            className="rounded-full cursor-pointer px-8 py-3 bg-green-500 text-white hover:bg-green-700 mt-5 disabled:opacity-40"
           >
             {loading ? (
               <div className="">
