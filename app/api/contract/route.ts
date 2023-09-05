@@ -1,5 +1,7 @@
 import prisma from "@/lib/prisma"
+import { getServerSession } from "next-auth"
 import { NextResponse } from "next/server"
+import { authOptions } from "../auth/[...nextauth]/route"
 
 export async function POST(req: Request) {
   const { contractNumber, address, type, userId } = await req.json()
@@ -23,5 +25,21 @@ export async function POST(req: Request) {
       },
     })
     return NextResponse.json(contract, { status: 201 })
+  }
+}
+
+export async function GET(req: Request, res: Response) {
+  const session = await getServerSession(authOptions)
+  try {
+    const contracts = await prisma.contract.findMany({
+      where: {
+        userId: session?.user.id,
+      },
+    })
+
+    return NextResponse.json(contracts)
+  } catch (err) {
+    console.log(err)
+    return new NextResponse("Internal Error", { status: 500 })
   }
 }

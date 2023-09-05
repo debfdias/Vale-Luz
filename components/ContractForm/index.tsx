@@ -3,8 +3,7 @@ import { contractSchema } from "@/interfaces/contractSchema"
 import { zodResolver } from "@hookform/resolvers/zod"
 import axios from "axios"
 import { useSession } from "next-auth/react"
-import { useRouter } from "next/navigation"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useForm } from "react-hook-form"
 import { PropagateLoader } from "react-spinners"
 import { toast } from "react-toastify"
@@ -16,9 +15,9 @@ type FormData = z.infer<typeof contractSchema>
 
 export default function ContractForm() {
   const [loading, setLoading] = useState(false)
+  const [contracts, setContracts] = useState([])
   const { data: session } = useSession()
 
-  const router = useRouter()
   const {
     handleSubmit,
     register,
@@ -28,6 +27,14 @@ export default function ContractForm() {
     resolver: zodResolver(contractSchema),
   })
 
+  async function getContracts() {
+    setContracts((await axios.get("/api/contract")).data)
+  }
+
+  useEffect(() => {
+    getContracts()
+  }, [contracts])
+
   register("contractNumber", { required: "Campo obrigatório" })
   register("address", { required: "Campo obrigatório" })
   register("type", { required: "Campo obrigatório" })
@@ -35,7 +42,6 @@ export default function ContractForm() {
   async function handleAddContract(data: any) {
     setLoading(true)
     data.userId = session?.user?.id!
-    console.log(data)
 
     axios
       .post("/api/contract", data)
@@ -80,7 +86,7 @@ export default function ContractForm() {
   ]
 
   return (
-    <>
+    <div className="">
       <div className="bg-white shadow-md rounded-lg p-8 mb-4 flex flex-col my-2">
         <form
           action=""
@@ -144,6 +150,9 @@ export default function ContractForm() {
           </button>
         </form>
       </div>
-    </>
+      {contracts?.map((contract: any) => {
+        return <div key={contract.id}>{contract.address}</div>
+      })}
+    </div>
   )
 }

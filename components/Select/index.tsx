@@ -8,7 +8,7 @@ export function Select({ register, options, name, ...rest }: any) {
         {...rest}
         className="block appearance-none rounded-[4px] bg-gray-100 py-2 px-4 mt-2 mb-1 focus:outline-none focus:ring-1 focus:ring-green-500 border border-gray-200 w-full text-gray-300"
       >
-        <option value="none" selected disabled hidden className="bg-pink-500">
+        <option defaultValue="none" disabled hidden className="bg-pink-500">
           Selecione um tipo
         </option>
         {options.map((item: any) => (
