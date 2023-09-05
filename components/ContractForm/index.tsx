@@ -10,6 +10,7 @@ import { PropagateLoader } from "react-spinners"
 import { toast } from "react-toastify"
 import * as z from "zod"
 import InputText from "../Input"
+import { Select } from "../Select"
 
 type FormData = z.infer<typeof contractSchema>
 
@@ -60,8 +61,23 @@ export default function ContractForm() {
         setLoading(false)
       })
 
-    router.push("/")
+    //router.push("/")
   }
+
+  const addressTypes = [
+    {
+      option: "Casa",
+      value: "HOUSE",
+    },
+    {
+      option: "Apartamento",
+      value: "APARTMENT",
+    },
+    {
+      option: "Outro",
+      value: "OTHER",
+    },
+  ]
 
   return (
     <>
@@ -78,7 +94,7 @@ export default function ContractForm() {
                   Conta contrato
                 </label>
                 <InputText
-                  label="Conta contrato"
+                  label="Número da conta"
                   name="contractNumber"
                   type="text"
                   error={errors?.contractNumber?.message}
@@ -89,11 +105,10 @@ export default function ContractForm() {
                 <label className="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2">
                   Tipo de imóvel
                 </label>
-                <InputText
-                  label="Apartamento/Casa/Etc"
+                <Select
                   name="type"
-                  type="text"
-                  error={errors?.type?.message}
+                  options={addressTypes}
+                  values={["HOUSE", "APARTMENT", "OTHER"]}
                   register={register}
                 />
               </div>{" "}
