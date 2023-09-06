@@ -46,3 +46,22 @@ export async function GET(req: Request, res: Response) {
     return new NextResponse("Internal Error", { status: 500 })
   }
 }
+
+export async function DELETE(req: Request, res: Response) {
+  const { contractId } = await req.json()
+
+  console.log(contractId)
+
+  try {
+    await prisma.contract.delete({
+      where: {
+        id: contractId,
+      },
+    })
+
+    return new NextResponse("Contract deleted", { status: 200 })
+  } catch (err) {
+    console.log(`Error: ${err}`)
+    return new NextResponse("Algo deu errado", { status: 500 })
+  }
+}

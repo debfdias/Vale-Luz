@@ -1,6 +1,7 @@
 "use client"
 import { contractSchema } from "@/interfaces/contractSchema"
 import { zodResolver } from "@hookform/resolvers/zod"
+import { Trash } from "@phosphor-icons/react"
 import axios from "axios"
 import { useSession } from "next-auth/react"
 import { useEffect, useState } from "react"
@@ -29,7 +30,6 @@ export default function ContractForm() {
   })
 
   async function getContracts() {
-    //setLoadingContracts(true)
     await axios
       .get("/api/contract")
       .then((response) => {
@@ -68,6 +68,7 @@ export default function ContractForm() {
             progress: undefined,
           })
           reset()
+          getContracts()
         }
       })
       .catch((err) => {
@@ -79,6 +80,29 @@ export default function ContractForm() {
       })
 
     //router.push("/")
+  }
+
+  async function handleDelete(contractId: string) {
+    await axios
+      .delete("/api/contract", { data: { contractId } })
+      .then(async (res) => {
+        if (res.status === 200) {
+          toast.success("Contrato deletado com sucesso!", {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+          })
+          reset()
+        }
+        getContracts()
+      })
+      .catch((err) => {
+        toast.error(err?.response?.data || "Algo deu errado.")
+      })
   }
 
   const addressTypes = [
@@ -167,11 +191,30 @@ export default function ContractForm() {
           Carregando contratos
         </div>
       ) : (
-        <>
+        <div className="mt-8 text-sm">
           {contracts?.map((contract: any) => {
-            return <div key={contract.id}>{contract.address}</div>
+            return (
+              <div key={contract.id} className="w-full">
+                <div className="flex pb-5 items-center justify-between">
+                  <div className="flex w-full">
+                    <div className="w-1/6">{contract.contractNumber}</div>
+                    <div className="w-1/2">{contract.address}</div>
+                    <div className="w-1/5">{contract.type}</div>
+                    <div className="w-1/5">
+                      {contract.isValid ? "Válido" : "Inválido"}
+                    </div>
+                  </div>
+                  <button
+                    className="pointer"
+                    onClick={() => handleDelete(contract.id)}
+                  >
+                    <Trash size={24} />
+                  </button>
+                </div>
+              </div>
+            )
           })}
-        </>
+        </div>
       )}
     </div>
   )
