@@ -5,7 +5,7 @@ import axios from "axios"
 import { useSession } from "next-auth/react"
 import { useEffect, useState } from "react"
 import { useForm } from "react-hook-form"
-import { PropagateLoader } from "react-spinners"
+import { MoonLoader, PropagateLoader } from "react-spinners"
 import { toast } from "react-toastify"
 import * as z from "zod"
 import InputText from "../Input"
@@ -15,6 +15,7 @@ type FormData = z.infer<typeof contractSchema>
 
 export default function ContractForm() {
   const [loading, setLoading] = useState(false)
+  const [loadingContracts, setLoadingContracts] = useState(false)
   const [contracts, setContracts] = useState([])
   const { data: session } = useSession()
 
@@ -28,12 +29,22 @@ export default function ContractForm() {
   })
 
   async function getContracts() {
-    setContracts((await axios.get("/api/contract")).data)
+    //setLoadingContracts(true)
+    await axios
+      .get("/api/contract")
+      .then((response) => {
+        setContracts(response.data)
+      })
+      .catch((err) => console.log(err))
+      .finally(() => {
+        setLoadingContracts(false)
+      })
   }
 
   useEffect(() => {
+    setLoadingContracts(true)
     getContracts()
-  }, [contracts])
+  }, [])
 
   register("contractNumber", { required: "Campo obrigatório" })
   register("address", { required: "Campo obrigatório" })
@@ -150,9 +161,18 @@ export default function ContractForm() {
           </button>
         </form>
       </div>
-      {contracts?.map((contract: any) => {
-        return <div key={contract.id}>{contract.address}</div>
-      })}
+      {loadingContracts ? (
+        <div className="">
+          <MoonLoader color="#18A131" size={24} />
+          Carregando contratos
+        </div>
+      ) : (
+        <>
+          {contracts?.map((contract: any) => {
+            return <div key={contract.id}>{contract.address}</div>
+          })}
+        </>
+      )}
     </div>
   )
 }
