@@ -80,6 +80,7 @@ model Contract {
   type           TypeAddress @default(OTHER)
   isValid        Boolean     @default(false)
   user           User        @relation(fields: [userId], references: [id])
+  createdAt      DateTime    @default(now())
 
   @@index([userId])
 }

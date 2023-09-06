@@ -35,6 +35,9 @@ export async function GET(req: Request, res: Response) {
       where: {
         userId: session?.user.id,
       },
+      orderBy: {
+        createdAt: "desc",
+      },
     })
 
     return NextResponse.json(contracts)
