@@ -9,6 +9,7 @@ import { useForm } from "react-hook-form"
 import { MoonLoader, PropagateLoader } from "react-spinners"
 import { toast } from "react-toastify"
 import * as z from "zod"
+import Dialog from "../Dialog"
 import InputText from "../Input"
 import { Select } from "../Select"
 
@@ -17,6 +18,8 @@ type FormData = z.infer<typeof contractSchema>
 export default function ContractForm() {
   const [loading, setLoading] = useState(false)
   const [loadingContracts, setLoadingContracts] = useState(false)
+  const [showDialogDelete, setShowDialogDelete] = useState(false)
+  const [currentId, setCurrentId] = useState("")
   const [contracts, setContracts] = useState([])
   const { data: session } = useSession()
 
@@ -45,10 +48,6 @@ export default function ContractForm() {
     setLoadingContracts(true)
     getContracts()
   }, [])
-
-  register("contractNumber", { required: "Campo obrigatório" })
-  register("address", { required: "Campo obrigatório" })
-  register("type", { required: "Campo obrigatório" })
 
   async function handleAddContract(data: any) {
     setLoading(true)
@@ -82,9 +81,14 @@ export default function ContractForm() {
     //router.push("/")
   }
 
-  async function handleDelete(contractId: string) {
+  function toggleConfirmationDelete(contractId: string) {
+    setShowDialogDelete(true)
+    setCurrentId(contractId)
+  }
+  async function handleDelete() {
+    console.log(currentId)
     await axios
-      .delete("/api/contract", { data: { contractId } })
+      .delete("/api/contract", { data: { contractId: currentId } })
       .then(async (res) => {
         if (res.status === 200) {
           toast.success("Contrato deletado com sucesso!", {
@@ -102,6 +106,10 @@ export default function ContractForm() {
       })
       .catch((err) => {
         toast.error(err?.response?.data || "Algo deu errado.")
+      })
+      .finally(() => {
+        setShowDialogDelete(false)
+        setCurrentId("")
       })
   }
 
@@ -122,6 +130,16 @@ export default function ContractForm() {
 
   return (
     <div className="">
+      {showDialogDelete && (
+        <Dialog
+          title="Confirmar exclusão"
+          description="Tem certeza que deseja excluir esse contrato? Essa ação não poderá ser desfeita."
+          showDialog={showDialogDelete}
+          onCancel={setShowDialogDelete}
+          onDelete={handleDelete}
+          currentId={currentId}
+        />
+      )}
       <div className="bg-white shadow-md rounded-lg p-8 mb-4 flex flex-col my-2">
         <form
           action=""
@@ -204,10 +222,7 @@ export default function ContractForm() {
                       {contract.isValid ? "Válido" : "Inválido"}
                     </div>
                   </div>
-                  <button
-                    className="pointer"
-                    onClick={() => handleDelete(contract.id)}
-                  >
+                  <button onClick={() => toggleConfirmationDelete(contract.id)}>
                     <Trash size={24} />
                   </button>
                 </div>

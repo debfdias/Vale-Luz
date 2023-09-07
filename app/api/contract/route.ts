@@ -49,9 +49,6 @@ export async function GET(req: Request, res: Response) {
 
 export async function DELETE(req: Request, res: Response) {
   const { contractId } = await req.json()
-
-  console.log(contractId)
-
   try {
     await prisma.contract.delete({
       where: {
