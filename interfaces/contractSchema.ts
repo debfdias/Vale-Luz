@@ -3,8 +3,8 @@ import z from "zod"
 export const contractSchema = z.object({
   contractNumber: z
     .string({
-      required_error: "Número de contrato é obrigatório",
-      invalid_type_error: "Número de contrato precisa ser numérico",
+      required_error: "Número de contrato é obrigatório.",
+      invalid_type_error: "Número de contrato precisa ser numérico.",
     })
     .min(6, { message: "Conta contrato possui 6 dígitos." })
     .max(6, { message: "Conta contrato possui 6 dígitos." }),
