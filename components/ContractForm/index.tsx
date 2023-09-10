@@ -85,8 +85,8 @@ export default function ContractForm() {
     setShowDialogDelete(true)
     setCurrentId(contractId)
   }
+
   async function handleDelete() {
-    console.log(currentId)
     await axios
       .delete("/api/contract", { data: { contractId: currentId } })
       .then(async (res) => {
